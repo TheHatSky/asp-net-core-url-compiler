@@ -1,0 +1,16 @@
+language: node_js
+node_js:
+    - "node"
+
+install:
+    - npm install
+    - npm install karma-cli webpack typescript typings --global
+    - typings install
+
+cache:
+    directories:
+        - "node_modules"
+
+script:
+    - npm test
+    - tsc ts/asp-net-core-url-compiler.ts --outDir ./js/
