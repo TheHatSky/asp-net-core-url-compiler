@@ -250,3 +250,9 @@ paket-files/
 # JetBrains Rider
 .idea/
 *.sln.iml
+
+# Project specific
+js/index.js
+js/tests.js
+.vscode
+typings

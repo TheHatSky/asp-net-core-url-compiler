@@ -1,0 +1,29 @@
+{
+  "name": "asp-net-core-url-compiler",
+  "version": "0.1.0",
+  "description": "A simple url compiler for asp.net core routes implemented on Typescript.",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "scripts": {
+    "test": "webpack && karma start"
+  },
+  "author": "Artem Sakhatskiy <sakhatskiy@yahoo.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/TheHatSky/asp-net-core-url-compiler"
+  },
+  "devDependencies": {
+    "jasmine-core": "^2.5.2",
+    "karma": "^1.3.0",
+    "karma-coverage": "^1.1.1",
+    "karma-jasmine": "^1.0.2",
+    "karma-mocha-reporter": "^2.2.0",
+    "karma-phantomjs-launcher": "^1.0.2",
+    "source-map-loader": "^0.1.5",
+    "ts-loader": "^1.2.0",
+    "typescript": "^2.0.9",
+    "typings": "^2.0.0",
+    "webpack": "^1.13.3"
+  }
+}
