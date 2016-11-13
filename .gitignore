@@ -256,3 +256,4 @@ js/index.js
 js/tests.js
 .vscode
 typings
+*.js.map
