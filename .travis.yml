@@ -2,6 +2,9 @@ language: node_js
 node_js:
     - "node"
 
+before_install:
+    - alias node-waf='node-gyp'
+
 install:
     - npm install
     - npm install karma-cli webpack typescript typings --global
