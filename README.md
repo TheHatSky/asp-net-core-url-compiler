@@ -3,6 +3,11 @@
 # ASP.NET Core url compiler
 A simple url compiler for asp.net core routes implemented on Typescript.
 
+### Install
+```shell
+npm install --save asp-net-core-url-compiler
+```
+
 ### Usage
 ```typescript
 import { compileUrl } from 'asp-net-core-url-compiler';
