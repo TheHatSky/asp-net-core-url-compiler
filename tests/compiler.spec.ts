@@ -1,25 +1,21 @@
-﻿/// <reference path="../typings/index.d.ts" />
-
-import '../node_modules/jasmine-core/lib/jasmine-core/jasmine';
-import { compileUrl } from '../ts/asp-net-core-url-compiler';
+﻿import { compileUrl } from '../ts/asp-net-core-url-compiler';
 
 const validEmptyTemplate = '';
 
-describe('Url helper', () => {
-
-    it('should throw error if url === null', () => {
+describe('Compiler', () => {
+    it('should throw an error if url === null', () => {
         expect(() => compileUrl(null, null))
             .toThrowError('Can\'t compile null URL.');
     });
 
-    it('should throw error if parameters === null', () => {
+    it('should throw an error if parameters === null', () => {
         expect(() => compileUrl(validEmptyTemplate, null))
             .toThrowError('Can\'t compile URL with null parameters.');
         expect(() => compileUrl(validEmptyTemplate, undefined))
             .toThrowError('Can\'t compile URL with undefined parameters.');
     });
 
-    it('should throw error if parameters contains complex types', () => {
+    xit('should throw an error if parameters contains complex types', () => {
         let parameters = {
             hardOne: { thing: 'abbacabba' },
             simpleString: 'simple?',
@@ -28,6 +24,11 @@ describe('Url helper', () => {
 
         expect(() => compileUrl(validEmptyTemplate, parameters))
             .toThrowError('Can\'t compile URL with complex parameter \'hardOne\'.');
+    });
+
+    it('should throw an error if parameter is not provided', () => {
+        expect(() => compileUrl('{page}', {}))
+            .toThrowError("Parameter 'page' is not provided.");
     });
 
     it('should compile template without parameters', () => {

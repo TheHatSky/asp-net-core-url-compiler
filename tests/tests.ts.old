@@ -1,0 +1,11 @@
+﻿/// <reference path="../typings/index.d.ts" />
+
+import '../node_modules/jasmine-core/lib/jasmine-core/jasmine';
+
+import { runTests as runCompilerTests } from './compiler-tests';
+import { runTests as runParameterTests } from './parameters-tests';
+import { runTests as runCsharpTypesTests } from './csharp-types-tests';
+
+describe('Compiler', runCompilerTests);
+describe('Parameters', runParameterTests);
+describe('C# types', runCsharpTypesTests);

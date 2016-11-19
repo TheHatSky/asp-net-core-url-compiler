@@ -2,25 +2,20 @@
 
 module.exports = function(config) {
   config.set({
-
-    // base path that will be used to resolve all patterns (eg. files, exclude)
-    basePath: '',
-
-
     // frameworks to use
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
-    frameworks: ['jasmine'],
+    frameworks: ['jasmine', 'karma-typescript'],
 
 
     // list of files / patterns to load in the browser
     files: [
-      'js/tests.js'
+        { pattern: "ts/*.ts" },
+        { pattern: "tests/*.ts" },
     ],
 
 
     // list of files to exclude
-    exclude: [
-    ],
+    exclude: [ ],
 
 
     // preprocess matching files before serving them to the browser
@@ -30,13 +25,18 @@ module.exports = function(config) {
       // do not include tests or libraries
       // (these files will be instrumented by Istanbul)
       // 'js/tests.js': ['coverage']
+      "ts/*.ts": ['karma-typescript'],
+      "tests/*.ts": ['karma-typescript']
     },
 
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['mocha'], //, 'coverage'
+    reporters: ['mocha', 'karma-typescript'], //, 'coverage'
 
+    karmaTypescriptConfig: {
+        excludeFromCoverage: /\.(d|spec)\.ts/,
+    },
 
     // web server port
     port: 9876,

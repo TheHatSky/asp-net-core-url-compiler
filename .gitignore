@@ -257,3 +257,5 @@ js/tests.js
 .vscode
 typings
 *.js.map
+coverage/
+tmp/

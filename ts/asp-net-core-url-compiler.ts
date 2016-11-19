@@ -1,19 +1,29 @@
-﻿module Compiler {
+﻿import Parameter from './parameter';
+
+module Compiler {
     export type Parameters = {
         [index: string]: any;
     };
 
     export const compileUrl = (
         urlTemplate: string,
-        parameters: Parameters
+        parameterValues: Parameters
     ): string => {
         if (urlTemplate == null)
             throw new Error('Can\'t compile null URL.');
-        if (parameters === undefined)
+        if (parameterValues === undefined)
             throw new Error('Can\'t compile URL with undefined parameters.');
-        if (parameters == null)
+        if (parameterValues == null)
             throw new Error('Can\'t compile URL with null parameters.');
 
+        const parametersInUrl = Parameter.parseUrlTemplate(urlTemplate);
+
+        for (let parameter of parametersInUrl) {
+            const value = parameterValues[parameter.name];
+
+            urlTemplate = parameter.applyToUrlTemplate(urlTemplate, value);
+        }
+/*
         for (let field in parameters)
         {
             let parameter = parameters[field];
@@ -30,7 +40,7 @@
 
             urlTemplate = urlTemplate.replace(new RegExp(`{${field}}`, 'g'), encodedParameter);
         }
-
+*/
         return urlTemplate;
     }
 }
