@@ -8,8 +8,7 @@ addons:
 
 install:
     - npm install
-    - npm install karma-cli webpack typescript typings --global
-    - typings install
+    - npm install karma-cli webpack typescript codeclimate-test-reporter --global
 
 cache:
     directories:
