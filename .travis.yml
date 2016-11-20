@@ -20,5 +20,5 @@ script:
     - tsc ts/asp-net-core-url-compiler.ts --outDir ./js/
 
 after_success:
-  - find ./coverage/ -name "lcovonly" | xargs cp -t ./
+  - find ./coverage -print0 -name "lcovonly" | xargs cp -t ./
   - codeclimate-test-reporter < lcovonly

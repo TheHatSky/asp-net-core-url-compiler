@@ -1,10 +1,7 @@
 module.exports = {
-    entry: {
-        "index": "./ts/index",
-        "tests": "./tests/tests.ts"
-    },
+    entry: "./ts/index",
     output: {
-    	filename: "./js/[name].js",
+    	filename: "./js/index.js",
     },
 
     // Enable sourcemaps for debugging webpack's output.
