@@ -1,4 +1,6 @@
 [![Build Status](https://travis-ci.org/TheHatSky/asp-net-core-url-compiler.svg?branch=master)](https://travis-ci.org/TheHatSky/asp-net-core-url-compiler)
+[![Code Climate](https://codeclimate.com/github/TheHatSky/asp-net-core-url-compiler/badges/gpa.svg)](https://codeclimate.com/github/TheHatSky/asp-net-core-url-compiler)
+[![Test Coverage](https://codeclimate.com/github/TheHatSky/asp-net-core-url-compiler/badges/coverage.svg)](https://codeclimate.com/github/TheHatSky/asp-net-core-url-compiler/coverage)
 
 # ASP.NET Core url compiler
 A simple url compiler for asp.net core routes implemented on Typescript.

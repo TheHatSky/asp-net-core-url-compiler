@@ -4,3 +4,6 @@ tests/
 karma.conf.js
 tsconfig.json
 webpack.config.js
+.eslintrc
+.eslintignore
+.codeclimate.yml
