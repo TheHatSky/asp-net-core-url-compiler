@@ -36,6 +36,11 @@ module.exports = function(config) {
 
     karmaTypescriptConfig: {
         excludeFromCoverage: /\.(d|spec)\.ts/,
+        reports: {
+            'text-summary': '',
+            'html': 'coverage',
+            'lcovonly': 'coverage'
+        }
     },
 
     // web server port
