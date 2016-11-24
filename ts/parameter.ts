@@ -1,4 +1,10 @@
-﻿import { Int32 } from './csharp-types';
+﻿import { String, Guid, Boolean, Type, Int32, Nullable } from './csharp-types';
+
+const typesDictionary: {[type: string]: Type } = {
+    'int': Int32,
+    'guid': Guid,
+    'bool': Boolean
+};
 
 const typeDelimeter = ':';
 const nullableMark = '?';
@@ -9,10 +15,11 @@ const escapeStringRegexp = (s: string) => {
 
 export default class Parameter {
     private readonly template: string;
+    private readonly type: Type;
 
     public readonly name: string;
     public readonly isNullable: boolean;
-    public readonly type: string;
+    public readonly typeString: string;
 
     constructor(parameterTemplate: string) {
         this.template = parameterTemplate.trim();
@@ -25,8 +32,19 @@ export default class Parameter {
 
         const parts = template.split(typeDelimeter);
         this.name = parts[0];
-        if (parts.length > 1)
-            this.type = parts[1];
+        if (parts.length > 1) {
+            this.typeString = parts[1];
+
+            const type = typesDictionary[this.typeString];
+            if (type == null)
+                throw new Error(`Type '${this.typeString}' doesn't exist.`);
+
+            this.type = this.isNullable
+                ? Nullable(type)
+                : type;
+        }
+        else
+            this.type = String;
     }
 
     public static parseUrlTemplate(urlTemplate: string): Parameter[] {
@@ -45,6 +63,16 @@ export default class Parameter {
     public applyToUrlTemplate(urlTemplate: string, value: any): string {
         if (value == null && !this.isNullable)
             throw new Error(`Parameter '${this.name}' is not provided.`);
+
+        try {
+            this.type.validate(value);
+        } catch (error) {
+            throw new Error(
+                `Parameter '${this.template}' doesn't match C# ${this.type.name}. ` +
+                `${error.message} ` +
+                `Provided value: ${JSON.stringify(value)}.`
+            );
+        }
 
         const template = escapeStringRegexp(this.template);
         const regexp = new RegExp(`{${template}}`, 'g');

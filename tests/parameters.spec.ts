@@ -4,7 +4,7 @@ describe('Parameters', () => {
     it('should create valid simple parameter', () => {
         const parameter = new Parameter('page');
         expect(parameter.name).toBe('page');
-        expect(parameter.type).toBeUndefined();
+        expect(parameter.typeString).toBeUndefined();
         expect(parameter.isNullable).toBe(false);
         expect(parameter['template']).toBe('page');
     });
@@ -12,7 +12,7 @@ describe('Parameters', () => {
     it('should create valid nullable parameter', () => {
         const parameter = new Parameter('page?');
         expect(parameter.name).toBe('page');
-        expect(parameter.type).toBeUndefined();
+        expect(parameter.typeString).toBeUndefined();
         expect(parameter.isNullable).toBe(true);
         expect(parameter['template']).toBe('page?');
     });
@@ -20,7 +20,7 @@ describe('Parameters', () => {
     it('should create valid typed parameter', () => {
         const parameter = new Parameter('page:int');
         expect(parameter.name).toBe('page');
-        expect(parameter.type).toBe('int');
+        expect(parameter.typeString).toBe('int');
         expect(parameter.isNullable).toBe(false);
         expect(parameter['template']).toBe('page:int');
     });
@@ -28,7 +28,7 @@ describe('Parameters', () => {
     it('should create valid typed nullable parameter', () => {
         const parameter = new Parameter('page:int?');
         expect(parameter.name).toBe('page');
-        expect(parameter.type).toBe('int');
+        expect(parameter.typeString).toBe('int');
         expect(parameter.isNullable).toBe(true);
         expect(parameter['template']).toBe('page:int?');
     });
@@ -40,30 +40,44 @@ describe('Parameters', () => {
         expect(result).toBe('something?page=&limit={limit?}');
     });
 
-    xit('should throw if invalid parameter type provided (int)', () => {
+    it('should throw if nonexisting type provided (lorem)', () => {
+        expect(() => new Parameter('page:lorem'))
+            .toThrowError('Type \'lorem\' doesn\'t exist.');
+    });
+
+    it('should throw if invalid parameter type provided (int)', () => {
         const parameter = new Parameter('page:int');
 
         expect(() => parameter.applyToUrlTemplate(
                 '{page:int}',
-                { page: "test" }))
-            .toThrowError('Parameter \'page\' has to match C# int, but string was provided.');
+                "test"))
+            .toThrowError(
+                'Parameter \'page:int\' doesn\'t match C# Int32. ' +
+                'Value of type Int32 must be a number. ' +
+                'Provided value: "test".');
     });
     
-    xit('should throw if invalid parameter type provided (bool)', () => {
-        const parameter = new Parameter('page:int');
+    it('should throw if invalid parameter type provided (bool)', () => {
+        const parameter = new Parameter('page:bool');
 
         expect(() => parameter.applyToUrlTemplate(
                 '{page:bool}',
-                { page: "test" }))
-            .toThrowError('Parameter \'page\' has to match C# bool, but string was provided.');
+                "test"))
+            .toThrowError(
+                'Parameter \'page:bool\' doesn\'t match C# Boolean. ' +
+                'Value of type Boolean must be a true/false value. ' +
+                'Provided value: "test".');
     });
 
-    xit('should throw if invalid parameter type provided (guid)', () => {
-        const parameter = new Parameter('page:int');
+    it('should throw if invalid parameter type provided (guid)', () => {
+        const parameter = new Parameter('page:guid');
 
         expect(() => parameter.applyToUrlTemplate(
                 '{page:guid}',
-                { page: "test" }))
-            .toThrowError('Parameter \'page\' has to match C# guid, but string was provided.');
+                "test"))
+            .toThrowError(
+                'Parameter \'page:guid\' doesn\'t match C# Guid. ' +
+                'Value of type Guid must be a valid RFC4122 GUID. ' +
+                'Provided value: "test".');
     });
 });
