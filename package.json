@@ -1,7 +1,8 @@
 {
   "name": "asp-net-core-url-compiler",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A simple url compiler for asp.net core routes implemented on Typescript.",
+  "keywords": ["typescript", "url", "asp.net core"],
   "main": "index.js",
   "types": "index.d.ts",
   "scripts": {
