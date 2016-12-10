@@ -1,13 +1,19 @@
 ﻿export abstract class Type {
-    public abstract get name(): string;
-    public abstract validate<TValue>(value: TValue): void;
+	public readonly name: string;
+	public abstract validate<TValue>(value: TValue): void;
+
+	constructor(name: string) {
+		this.name = name;
+	}
 }
 
 class TypeError extends Error {};
 
 export namespace Type {
-    export class Int32 extends Type {
-        public get name(): string { return 'Int32'; };
+	export class Int32 extends Type {
+		constructor() {
+			super("Int32");
+		}
 
         public validate<TValue>(value: TValue): void {
             if (value == null)
@@ -21,14 +27,18 @@ export namespace Type {
         }
     }
 
-    export class String extends Type {
-        public get name(): string { return 'String'; };
+	export class String extends Type {
+		constructor() {
+			super("String");
+		}
 
         public validate<TValue>(value: TValue): void { }
     }
 
-    export class Boolean extends Type {
-        public get name(): string { return 'Boolean'; };
+	export class Boolean extends Type {
+		constructor() {
+			super("Boolean");
+		}
 
         private validValues = ['false', 'true'];
 
@@ -45,7 +55,10 @@ export namespace Type {
     export class Guid extends Type {
         private readonly validGuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
         private readonly bracketedGuid = /^{[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}}$/i;
-        public get name(): string { return 'Guid'; };
+
+		constructor() {
+			super("Guid");
+		}
 
         public validate<TValue>(value: TValue): void {
             if (value == null)
@@ -60,11 +73,9 @@ export namespace Type {
         }
     }
 
-    class Nullable<T extends Type> extends Type {
-        public get name(): string { return `Nullable<${this.type.name}>`; };
-
+	class Nullable<T extends Type> extends Type {
         constructor(private type: T) {
-            super();
+			super(`Nullable<${type.name}>`);
         }
 
         public static NullableTypeFabric<T extends Type>(type: T) {
